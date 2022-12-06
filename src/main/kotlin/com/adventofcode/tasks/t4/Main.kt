@@ -4,7 +4,7 @@ import com.adventofcode.Util
 
 data class Assignment(val start: Int, val end: Int)
 
-fun main(args: Array<String>) {
+fun main() {
     val oneContainsAnother = false
     val input = Util.readInputForTaskAsLines()
 

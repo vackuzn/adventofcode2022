@@ -2,7 +2,7 @@ package com.adventofcode.tasks.t3
 
 import com.adventofcode.Util
 
-fun main(args: Array<String>) {
+fun main() {
     val groupOf3 = true
     val input = Util.readInputForTaskAsLines()
 

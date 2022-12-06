@@ -30,7 +30,7 @@ data class Round(
     }
 }
 
-fun main(args: Array<String>) {
+fun main() {
     val secondCharIsExpectedResult = true
     val input = Util.readInputForTaskAsLines()
 

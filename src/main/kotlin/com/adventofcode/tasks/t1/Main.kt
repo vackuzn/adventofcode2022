@@ -2,7 +2,7 @@ package com.adventofcode.tasks.t1
 
 import com.adventofcode.Util
 
-fun main(args: Array<String>) {
+fun main() {
     val data = loadData()
 
     val result = data.map { it.sum() }.sortedDescending().take(3).sum()
@@ -14,7 +14,7 @@ fun loadData(): List<List<Int>> {
     val input = Util.readInputForTaskAsLines()
 
     return sequence {
-        var result = mutableListOf<Int>()
+        val result = mutableListOf<Int>()
         input.forEach { line ->
             if (line.isEmpty()) {
                 yield(result.toList())
