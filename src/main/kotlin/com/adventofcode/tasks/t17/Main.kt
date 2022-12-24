@@ -1,17 +1,16 @@
 package com.adventofcode.tasks.t17
 
 import com.adventofcode.Util
-import java.lang.Integer.max
+import java.lang.Long.max
 
 
 fun main() {
-    part2()
+    part1()
+//    part2()
 }
 
 private fun part1() {
     val input = Util.readInputForTaskAsLines()
-//    println(Day17(input).part1())
-
     val moveGenerator = MoveGenerator(input.first())
 
     val pf = PlayField(moveGenerator)
@@ -32,7 +31,9 @@ private fun part2() {
 
     val pf = PlayField(moveGenerator)
     for (figure in tetrisFiguresGenerator(1_000_000_000_000)) {
-        cnt++
+        if (cnt++.mod(1000) == 0) {
+            pf.clearLowerRows()
+        }
         pf.dropFigure(figure)
     }
 
@@ -42,12 +43,12 @@ private fun part2() {
 class PlayField(
     private val moveGenerator: MoveGenerator
 ) {
-    var towerHeight: Int = 0
+    var towerHeight: Long = 0
     private val fieldWidth = 7
     private val droppedFigurePoints = mutableSetOf<Point>()
 
     private fun figureFallen(f: Figure) {
-        towerHeight = max(towerHeight, f.topBorder + 1)
+        towerHeight = max(towerHeight, (f.topBorder + 1))
         droppedFigurePoints.addAll(f.points)
     }
 
@@ -97,11 +98,15 @@ class PlayField(
     private fun getStartPoint(): Point {
         return Point(2, towerHeight + 3)
     }
+
+    fun clearLowerRows() {
+        droppedFigurePoints.removeIf { it.y < towerHeight - 100 }
+    }
 }
 
 data class Point(
-    val x: Int,
-    val y: Int
+    val x: Long,
+    val y: Long
 ) {
     fun rebase(delta: Point): Point {
         return this.copy(
@@ -114,10 +119,10 @@ data class Point(
 data class Figure(
     val points: List<Point>
 ) {
-    val rightBorder: Int = points.maxOf { it.x }
-    val leftBorder: Int = points.minOf { it.x }
-    val topBorder: Int = points.maxOf { it.y }
-    val bottomBorder: Int = points.minOf { it.y }
+    val rightBorder: Long = points.maxOf { it.x }
+    val leftBorder: Long = points.minOf { it.x }
+    val topBorder: Long = points.maxOf { it.y }
+    val bottomBorder: Long = points.minOf { it.y }
 
     fun rebase(delta: Point): Figure {
         val rebasedPts = points.map { it.rebase(delta) }
